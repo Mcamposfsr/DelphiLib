@@ -1,0 +1,14 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2026-04-24T10:11:54.5080787-03:00",
+	"installedModules": {
+		"https://github.com/academiadocodigo/simpleorm": {
+			"name": "simpleorm",
+			"version": "v3.07.00",
+			"hash": "ea24ed3d08cc6f00cc34508b3d9614b1",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}

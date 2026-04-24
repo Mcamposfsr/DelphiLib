@@ -1,0 +1,11 @@
+{
+	"name": "DelphiLib",
+	"description": "Biblioteca para componentes Delphi",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {
+		"https://github.com/academiadocodigo/simpleorm": "^v3.07.00"
+	}
+}
