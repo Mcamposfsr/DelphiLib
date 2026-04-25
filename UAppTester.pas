@@ -10,7 +10,7 @@ uses
   ;
 
 type
-  TForm1 = class(TForm)
+  TFormTester = class(TForm)
     procedure FormShow(Sender: TObject);
   private
 
@@ -19,14 +19,14 @@ type
   end;
 
 var
-  Form1: TForm1;
+  FormTester: TFormTester;
 
 implementation
 
 {$R *.dfm}
 
 
-  procedure TForm1.FormShow(Sender: TObject);
+  procedure TFormTester.FormShow(Sender: TObject);
   var LDM: IDM;
   begin
     LDM := TDMClientes.Create;
