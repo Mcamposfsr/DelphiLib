@@ -6,6 +6,6 @@
 	"mainsrc": "./src",
 	"projects": [],
 	"dependencies": {
-		"https://github.com/academiadocodigo/simpleorm": "^v3.07.00"
+		"github.com/academiadocodigo/simpleorm": "^v3.07.00"
 	}
 }

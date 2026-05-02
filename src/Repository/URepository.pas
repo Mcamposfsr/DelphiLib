@@ -4,13 +4,13 @@ interface
 
 uses
 //DELPHI USES
-System.Sysutils,Firedac.comp.Client,System.Generics.Collections,
+System.Sysutils,Firedac.comp.Client,System.Generics.Collections,Vcl.Dialogs,FireDAC.VCLUI.Wait,FireDAC.Stan.Async,
 
 //LIBS
-SimpleInterface,SimpleDAO,SimpleAttributes,SimpleQueryFiredac,
+SimpleInterface,SimpleDAO,SimpleAttributes,SimpleQueryFiredac,SimpleLogger,
 
-//CRETED USES
-UDM,UMappingClass;
+//CREATED USES
+UDM,UMappingClass,ULogger;
 
 //INTERFACE DE ABSTRAÇÃO
 type IRepository = interface
@@ -23,8 +23,9 @@ type TRepository = class(TInterfacedObject,IRepository)
   private
     // CONEXÃO DM
     FConnection: ISimpleQuery;
-    FDAO: ISimpleDAO<TEmpresa>;
-
+    FDAO: ISimpleDAO<TCLiente>;
+    FConn: TFDConnection;
+    Flogger: iSimpleQueryLogger;
   public
 
     constructor Create(ADM:IDM);
@@ -34,12 +35,9 @@ type TRepository = class(TInterfacedObject,IRepository)
     procedure Insert;
     procedure Update;
     procedure Delete(AId:String);
-    function FindAll:TObjectList<TEmpresa>;
-    function Find(AId:Integer):TEmpresa;
+    function FindAll:TObjectList<TCLiente>;
+    function Find(AId:Integer):TCLiente;
 end;
-
-
-
 
 implementation
 
@@ -47,10 +45,12 @@ implementation
   constructor TRepository.Create(ADM:IDM);
   begin
     inherited Create;
-
+    Flogger := TFileLogger.Create;
     //ENCAPSULAR/ ABSTRAIR CONEXÃO
+    FConn := ADM.GetConnection;
     FConnection := TSimpleQueryFiredac.New(ADM.GetConnection);
-    FDAO := TSimpleDAO<TEmpresa>.New(FConnection);
+    FDAO := TSimpleDAO<TCLiente>.New(FConnection);
+    FDAO.Logger(Flogger);
   end;
 
   // DESTRUCTOR
@@ -63,12 +63,12 @@ implementation
 
 
   procedure TRepository.Insert;
-  var LEmpresa: TEmpresa;
+  var LEmpresa: TCLiente;
   begin
     //CRIAÇÃO E CONFIGURAÇÃO MAPPER
-    LEmpresa := TEmpresa.Create;
+    LEmpresa := TCLiente.Create;
     try
-      LEmpresa.CNPJ := '360';
+      LEmpresa.CPF := '360';
       LEmpresa.Nome := 'Matheus';
 
       FDAO.Insert(LEmpresa);
@@ -79,13 +79,13 @@ implementation
   end;
 
   procedure TRepository.Update;
-  var LEmpresa: TEmpresa;
+  var LEmpresa: TCLiente;
   begin
     //CRIAÇÃO E CONFIGURAÇÃO MAPPER
-    LEmpresa := TEmpresa.Create;
+    LEmpresa := TCLiente.Create;
     try
       LEmpresa.ID := 1;
-      LEmpresa.CNPJ := '361';
+      LEmpresa.CPF := '361';
       LEmpresa.Nome := 'Matheus Campos';
       FDAO.Update(LEmpresa);
 
@@ -99,21 +99,40 @@ implementation
     FDAO.Delete('ID',AId);
   end;
 
-  function TRepository.FindAll:TObjectList<TEmpresa>;
-  var LList: TObjectList<TEmpresa>;
+  function TRepository.FindAll:TObjectList<TCLiente>;
+  var LList: TObjectList<TCLiente>;
   begin
-     LList := TObjectList<TEmpresa>.Create;
+     LList := TObjectList<TCLiente>.Create;
      FDAO.Find(LList);
 
      //CALLER LIBERA OBJETO
      Result := LList;
   end;
 
-  function TRepository.Find(AId:Integer): TEmpresa;
-  var LEmpresa: TEmpresa;
+  function TRepository.Find(AId:Integer): TCLiente;
+  var LEmpresa: TCLiente;
   begin
     LEmpresa := FDAO.Find(AId);
+    ShowMessage(LEmpresa.Nome);
     Result := LEmpresa;
   end;
+
+//  function TRepository.Find(AId:Integer): TCLiente;
+//  var Q: TFDQuery;
+//begin
+//  Q := TFDQuery.Create(nil);
+//  try
+//    Q.Connection := FConn;
+//
+//    Q.SQL.Text := 'SELECT * FROM CLIENTES WHERE ID_CLIENTE = :ID';
+//    Q.ParamByName('ID').AsInteger := 1;
+//
+//    Q.Open;
+//
+//    ShowMessage(Q.FieldByName('NOME_CLIENTE').AsString);
+//  finally
+//    Q.Free;
+//  end;
+//end;
 
 end.

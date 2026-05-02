@@ -2,66 +2,70 @@ unit UMappingClass;
 
 interface
 
+uses SimpleAttributes,Vcl.Dialogs;
+
 type
 //MAPEAMENTO DE TABELA
-[Tabela('EMPRESAS')]
- TEmpresa = class
+[Tabela('CLIENTES')]
+ TCLiente = class
   private
     FID: Integer;
-    FCNPJ: String;
     FNome: String;
+    FCPF: String;
 
     procedure SetID(const AID: Integer);
-    procedure SetCNPJ(const ACNPJ: String);
-    procedure SetFNome(const ANome:String);
-
+    procedure SetCPF(const ACPF: String);
+    procedure SetNome(const ANome:String);
 
   public
     Constructor Create;
-    Destructor Destroy;
+    Destructor Destroy; Override;
 
   published
-    [Campo('ID'),'PK']
+    [Campo('ID_CLIENTE'),Pk,AutoInc]
     property ID: Integer read FID write SetID;
 
-    [Campo('EMP_CNPJ')]
-    property CNPJ: String read FCNPJ write SetCNPJ;
+    [Campo('NOME_CLIENTE')]
+    property Nome: String  read FNome write SetNome;
 
-    [Campo('EMP_NOME')]
-    property Nome: String  read FNome write SetFNome;
+    [Campo('CPF_CLIENTE')]
+    property CPF: String read FCPF write SetCPF;
 
 end;
 
 implementation
 
   //CONSTRUCTOR MAPEAMENTO
-  constructor TEmpresa.Create;
+  constructor TCLiente.Create;
   begin
-
+    inherited;
   end;
 
   //DESTRUCTOR MAPEAMENTO
-  Destructor TEmpresa.Destroy;
+  Destructor TCLiente.Destroy;
   begin
-    inherited
+    inherited;
   end;
 
   //SET ID
-  procedure TEmpresa.SetID(const AID: Integer);
+  procedure TCLiente.SetID(const AID: Integer);
   begin
     Self.FID := AID;
   end;
 
-  //SET CNPJ
-  procedure TEmpresa.SetCNPJ(const ACNPJ: String);
+  //SET CPF
+  procedure TCLiente.SetCPF(const ACPF: String);
   begin
-    Self.FCNPJ := ACNPJ;
+    Self.FCPF := ACPF;
+//    ShowMessage(ACPF);
   end;
 
   //SET NOME
-  procedure TEmpresa.SetFNome(const ANome:String);
+  procedure TCLiente.SetNome(const ANome:String);
   begin
+
     Self.FNome := ANome;
+//    ShowMessage(Self.Nome);
   end;
 
 end.

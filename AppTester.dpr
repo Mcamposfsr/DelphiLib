@@ -4,9 +4,9 @@ uses
   Vcl.Forms,
   UAppTester in 'UAppTester.pas' {FormTester},
   UDM in 'src\DM\UDM.pas',
-  URepository in 'src\Repository\URepository.pas',
   UMappingClass in 'src\Repository\Mapping\UMappingClass.pas',
-  UGenericUtils in 'src\Utils\UGenericUtils.pas';
+  UGenericUtils in 'src\Utils\UGenericUtils.pas',
+  ULogger in 'src\Repository\ULogger.pas';
 
 {$R *.res}
 

@@ -68,9 +68,7 @@ implementation
     Self.FConnection.Params.Database := ADataBasePath;
     Self.FConnection.LoginPrompt := False;
 
-
-
-    Self.FConnection.TxOptions.AutoCommit := False;
+//    Self.FConnection.TxOptions.AutoCommit := False;
     Self.FConnection.Connected := True;
   end;
 

@@ -37,7 +37,7 @@ Win32/
 #Android64/
 #iOSDevice64/
 #Linux64/
-Database/
+#Database/
 
 
 # Delphi compiler-generated binaries (safe to delete)
@@ -83,8 +83,8 @@ modules/
 
 # Firebird database files (binaries)
 *.fdb
-Database/*.fdb
-Database/*.fdb
+#Database/*.fdb
+#Database/*.fdb
 
 # Ignore CadizSyncSped
 *.ini
